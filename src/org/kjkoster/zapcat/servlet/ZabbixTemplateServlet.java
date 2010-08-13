@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import org.kjkoster.zapcat.zabbix.ZabbixAgent;
 
 /**
@@ -55,7 +56,7 @@ public class ZabbixTemplateServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1245376184346210185L;
 	private static final Logger log = Logger
-            .getLogger(ZabbixTemplateServlet.class);
+            .getLogger(ZabbixTemplateServlet.class.getName());
 
     private enum Type {
         /**
@@ -145,7 +146,7 @@ public class ZabbixTemplateServlet extends HttpServlet {
             t.writeGraphs(out, processors, managers);
             t.writeFooter(out);
         } catch (Exception e) {
-            log.error("unable to generate template", e);
+            log.log(Level.SEVERE, "unable to generate template", e);
             e.printStackTrace(out);
         } finally {
             out.flush();

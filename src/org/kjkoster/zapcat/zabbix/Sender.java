@@ -24,7 +24,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.kjkoster.zapcat.util.Base64;
 
 
@@ -34,7 +35,7 @@ import org.kjkoster.zapcat.util.Base64;
  * @author Kees Jan Koster &lt;kjkoster@kjkoster.org&gt;
  */
 final class Sender extends Thread {
-    private static final Logger log = Logger.getLogger(Sender.class);
+    private static final Logger log = Logger.getLogger(Sender.class.getName());
 
     private final BlockingQueue<Item> queue;
 
@@ -95,10 +96,10 @@ final class Sender extends Thread {
                 send(item.getHost(), item.getKey(), item.getValue());
             } catch (InterruptedException e) {
                 if (!stopping) {
-                    log.warn("ignoring exception", e);
+                    log.log(Level.WARNING, "ignoring exception", e);
                 }
             } catch (Exception e) {
-                log.warn("ignoring exception", e);
+                log.log(Level.WARNING, "ignoring exception", e);
             }
         }
 
@@ -108,7 +109,7 @@ final class Sender extends Thread {
             try {
                 send(item.getHost(), item.getKey(), item.getValue());
             } catch (Exception e) {
-                log.warn("ignoring exception", e);
+                log.log(Level.WARNING, "ignoring exception", e);
             }
         }
     }
@@ -125,9 +126,8 @@ final class Sender extends Thread {
         message.append(Base64.encode(value == null ? "" : value));
         message.append(tail);
 
-        if (log.isDebugEnabled()) {
-            log.debug("sending " + message);
-        }
+        
+       log.finest("sending " + message);
 
         Socket zabbix = null;
         OutputStreamWriter out = null;
@@ -143,11 +143,11 @@ final class Sender extends Thread {
             in = new BufferedReader(new InputStreamReader(zabbix
                     .getInputStream()));
             final String response = in.readLine();
-            if (log.isDebugEnabled()) {
-                log.debug("received " + response);
-            }
+            
+            log.finest("received " + response);
+            
             if (!"OK".equals(response)) {
-                log.warn("received unexpected response '"
+                log.log(Level.WARNING, "received unexpected response '"
                         + new String(response) + "' for key '" + key + "'");
             }
         } finally {

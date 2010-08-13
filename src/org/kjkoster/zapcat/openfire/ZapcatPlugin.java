@@ -21,11 +21,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
-import org.apache.log4j.BasicConfigurator;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+//import org.apache.log4j.BasicConfigurator;
 import org.jivesoftware.openfire.container.Plugin;
 import org.jivesoftware.openfire.container.PluginManager;
 import org.jivesoftware.util.JiveGlobals;
-import org.jivesoftware.util.Log;
+//import org.jivesoftware.util.Log;
 import org.jivesoftware.util.PropertyEventDispatcher;
 import org.jivesoftware.util.PropertyEventListener;
 import org.kjkoster.zapcat.Agent;
@@ -36,6 +39,7 @@ import org.kjkoster.zapcat.zabbix.ZabbixAgent;
  * 
  * @author Guus der Kinderen &lt;guus@nimbuzz.com&gt;
  */
+
 public class ZapcatPlugin implements Plugin, PropertyEventListener {
 
     private static final String ZAPCAT_PORT = "zapcat.port";
@@ -47,17 +51,19 @@ public class ZapcatPlugin implements Plugin, PropertyEventListener {
     private InetAddress inetAddress = null;
 
     private int port = ZabbixAgent.DEFAULT_PORT;
-
+	private static final Logger log = Logger
+            .getLogger(ZapcatPlugin.class.getName());
     /**
      * @see org.jivesoftware.openfire.container.Plugin#initializePlugin(org.jivesoftware.openfire.container.PluginManager,
      *      java.io.File)
      */
+    
     public void initializePlugin(final PluginManager manager,
             final File pluginDirectory) {
-        Log.info("Initializing Zapcat Plugin.");
+        log.info("Initializing Zapcat Plugin.");
 
-        Log.info("Initializing Log4J for Zapcat.");
-        BasicConfigurator.configure(new OpenfireLog4jAppender());
+        log.info("Initializing Log4J for Zapcat.");
+        //BasicConfigurator.configure(new OpenfireLog4jAppender());
 
         PropertyEventDispatcher.addListener(this);
         final String address = JiveGlobals.getProperty(ZAPCAT_INETADDRESS);
@@ -65,7 +71,8 @@ public class ZapcatPlugin implements Plugin, PropertyEventListener {
             try {
                 inetAddress = InetAddress.getByName(address);
             } catch (UnknownHostException ex) {
-                Log.warn("Unable to parse InetAddress from property. "
+                log.log(Level.WARNING,
+                        "Unable to parse InetAddress from property. "
                         + "Using default value instead.", ex);
                 inetAddress = null;
             }
@@ -79,8 +86,9 @@ public class ZapcatPlugin implements Plugin, PropertyEventListener {
     /**
      * @see org.jivesoftware.openfire.container.Plugin#destroyPlugin()
      */
+    
     public void destroyPlugin() {
-        Log.info("Destroying Zapcat Plugin.");
+        log.info("Destroying Zapcat Plugin.");
         PropertyEventDispatcher.removeListener(this);
 
         if (agent != null) {
@@ -122,11 +130,11 @@ public class ZapcatPlugin implements Plugin, PropertyEventListener {
         }
 
         if (agent != null) {
-            Log.debug("Stopping agent that's currently running.");
+            log.finer("Stopping agent that's currently running.");
             agent.stop();
         }
 
-        Log.debug("Starting new agent.");
+        log.finer("Starting new agent.");
         agent = new ZabbixAgent(inetAddress, port, true);
     }
 
@@ -147,7 +155,8 @@ public class ZapcatPlugin implements Plugin, PropertyEventListener {
                 }
                 restartAgent(iAddr, port);
             } catch (UnknownHostException ex) {
-                Log.warn("Unable to parse inetaddress from new property. "
+                log.log(Level.WARNING,
+                        "Unable to parse inetaddress from new property. "
                         + "Using old value instead.", ex);
             }
         } else if (ZAPCAT_PORT.equals(property)) {
