@@ -1,0 +1,21 @@
+In order to use this template, you need to fit your Zabbix Agent configuration.
+
+On my JEE server, i run many "zabbix agents":
+- zabbix_agentd for the system (tcp port 10050) 
+- zapcat in JEE server (tcp port 10000 + admin port => eg. 14848)
+- zapcat in daemon mode to query our Sun IMQ JMS server (tcp port 24848)
+
+In zabbix, you can only configure one Zabbix Agent port per host, so i "proxyed" zapcat.
+The workflow looks like:
+
+ zabbix_server => zabbix_agent => zapcat
+
+1) First in zabbix_agentd.conf:
+
+UserParameter=zapcat[*],/opt/zabbix_agent/scripts/zapcat.sh "$1" "$2" "$3" "$4" "$5" "$6"
+
+2) Copy zapcat.sh where you have to.
+
+3) import Template_Sun_imq_JMS.xml
+
+

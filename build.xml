@@ -40,7 +40,7 @@
 		<mkdir dir="build/jar" />
 		<javac destdir="build/jar" srcdir="src" debug="true">
 			<classpath>
-				<pathelement location="lib/log4j-1.2.15.jar" />
+				<!-- <pathelement location="lib/log4j-1.2.15.jar" /> -->
 				<pathelement location="lib/servlet-api.jar" />
 				<pathelement location="lib/ostermillerutils_1_07_00.jar" />
 				<pathelement location="lib/junit-4.4.jar" />
@@ -56,7 +56,7 @@
 			<fileset dir="." includes="webapp/**" />
 		</copy>
 		<mkdir dir="build/webapp/WEB-INF/lib" />
-		<copy file="lib/log4j-1.2.15.jar" todir="build/webapp/WEB-INF/lib" />
+		<!--<copy file="lib/log4j-1.2.15.jar" todir="build/webapp/WEB-INF/lib" />-->
 		<copy file="${jar}" todir="build/webapp/WEB-INF/lib" />
 
 		<jar destfile="${war}" basedir="build/webapp" />
@@ -67,7 +67,7 @@
 			<fileset dir="openfire" includes="zapcat/**" />
 		</copy>
 		<mkdir dir="build/zapcat/lib" />
-		<copy file="lib/log4j-1.2.15.jar" todir="build/zapcat/lib" />
+		<!--<copy file="lib/log4j-1.2.15.jar" todir="build/zapcat/lib" />-->
 		<copy file="${jar}" todir="build/zapcat/lib" />
 
 		<jar destfile="${of}" basedir="build/zapcat" />
@@ -87,7 +87,7 @@
 	<target name="agent" depends="jar" description="run the zapcat agent sample">
 		<mkdir dir="build/samples" />
 		<javac destdir="build/samples" srcdir="samples" classpath="${jar}" debug="true" />
-		<copy todir="build/samples" file="samples/log4j.xml" />
+		<!--<copy todir="build/samples" file="samples/log4j.xml" /> -->
 		<java classname="SampleAgent" fork="true">
 			<jvmarg value="-Dcom.sun.management.jmxremote" />
 			<jvmarg value="-Dcom.sun.management.jmxremote.authenticate=false" />
@@ -95,7 +95,7 @@
 			<classpath>
 				<pathelement path="build/samples" />
 				<pathelement location="${jar}" />
-				<pathelement location="lib/log4j-1.2.15.jar" />
+				<!--<pathelement location="lib/log4j-1.2.15.jar" />-->
 			</classpath>
 		</java>
 	</target>
@@ -103,7 +103,7 @@
 	<target name="trapper" depends="jar" description="run the zapcat trapper sample">
 		<mkdir dir="build/samples" />
 		<javac destdir="build/samples" srcdir="samples" classpath="${jar}" debug="true" />
-		<copy todir="build/samples" file="samples/log4j.xml" />
+		<!--<copy todir="build/samples" file="samples/log4j.xml" />-->
 		<java classname="SampleTrapper" fork="true">
 			<jvmarg value="-Dcom.sun.management.jmxremote" />
 			<jvmarg value="-Dcom.sun.management.jmxremote.authenticate=false" />
@@ -111,7 +111,7 @@
 			<classpath>
 				<pathelement path="build/samples" />
 				<pathelement location="${jar}" />
-				<pathelement location="lib/log4j-1.2.15.jar" />
+				<!--<pathelement location="lib/log4j-1.2.15.jar" />-->
 				<pathelement location="lib/ostermillerutils_1_07_00.jar" />
 			</classpath>
 		</java>
