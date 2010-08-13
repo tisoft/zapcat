@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--
+    This file is part of Zapcat.
+
+    Zapcat is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
+
+    Zapcat is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+    details.
+
+    You should have received a copy of the GNU General Public License along
+    with Zapcat. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<html>
+<head>
+<title>Zapcat Plugin Readme</title>
+<style type="text/css">
+BODY {
+	font-size: 0.8em;
+	font-family: tahoma, verdana, arial, helvetica, sans-serif;
+}
+
+H1 {
+	font-family: tahoma, arial, helvetica, sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+	border-bottom: 1px #ccc solid;
+	padding-bottom: 2px;
+}
+
+H2 {
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+A:hover {
+	text-decoration: none;
+}
+
+TT {
+	font-family: courier new;
+	font-weight: bold;
+	color: #060;
+}
+
+PRE {
+	font-family: courier new;
+	font-size: 100%;
+}
+</style>
+</head>
+<body>
+
+<h1>Zapcat Plugin Readme</h1>
+
+<h2>Overview</h2>
+<p>The Zapcat plugin for Openfire enables you to monitor your
+Openfire server through the Zabbix monitoring tool. The Zapcat library,
+which is used inside this plugin, bridges between the JMX management API
+inside Java applications and the Zabbix monitoring tool.</p>
+
+<h2>Installation</h2>
+<p>Copy the jarfile into the plugins directory of your Openfire
+installation. The plugin will then be automatically deployed. To upgrade
+to a new version: 1) go to the plugin screen of the Admin Console, 2)
+click on the delete icon on the same row as the currently installed
+Zapcat plugin, 3) copy the new jarfile into the plugins directory of
+your Openfire installation.</p>
+
+<h2>Configuration</h2>
+<p>There are two optional properties that can be used to change the
+behavior of the Zapcat plugin:</p>
+<ul>
+	<li><tt>zapcat.inetaddress</tt> -- listen for Zabbix on a specific
+	interface. If not set, the public interface of your server will be
+	used.</li>
+	<li><tt>zapcat.port</tt> -- listen for Zabbix on a specific port.
+	If not set, the default value of 10052 will be used.</li>
+</ul>
+<p></p>
+
+<h2>Using the Plugin</h2>
+<p>This is a short guide on how to configure Zabbix to query Zapcat
+for JMX data. The example used here is described in more detail on the
+Zapcat library homepage at <a
+	href="http://www.kjkoster.org/zapcat/How%20To.html">http://www.kjkoster.org/zapcat/</a>.
+</p>
+
+<p>From a Zabbix server point of view, the Zapcat plugin can be used
+as a Zabbix Agent. After the plugin has been installed, you can add a
+new 'Host' configuration to your Zabbix server. Configure it to connect
+to the IP address of your Openfire server. Unless you changed the
+default configuration of the plugin, use port 10052.</p>
+<p>Each Zabbix Item configuration gets a Zapcat JMX query defined it
+the 'key' field. Zapcat JMX queries follow this syntax: <tt>jmx[&lt;object
+name&gt;][&lt;property name&gt;]</tt> -- where the object and property refer
+to JMX objects and properties. If, for example, you're interested in
+monitoring the amount of time that your JVM spends on compiling, you can
+use this query (as shown on the Zapcat library home page): <tt>jmx[java.lang:type=Compilation][TotalCompilationTime]</tt>.</p>
+
+<h2>Extending the functionality</h2>
+<p>The Zapcat plugin can be used to monitor anything that is
+addressable by JMX. You can extend your monitoring capabilities by
+writing a small plugin that loads a custom MBean. An example MBean that
+mimics the unofficial loadStats Openfire plugin can be downloaded from
+the Zapcat library homepage. Simply add that plugin to Openfire as well,
+define your JMX queries in Zabbix, and you'll have your custom Openfire
+statistics monitor set up!</p>
+</body>
+</html>

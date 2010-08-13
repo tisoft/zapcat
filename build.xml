@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of Zapcat.
+
+    Zapcat is free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free Software
+    Foundation, either version 3 of the License, or (at your option) any later
+    version.
+
+    Zapcat is distributed in the hope that it will be useful, but WITHOUT ANY
+    WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+    details.
+
+    You should have received a copy of the GNU General Public License along
+    with Zapcat. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<project name="zapcat" default="all">
+	<description>
+		Build the Zapcat library. You can even use this to run the sample programs.
+	</description>
+
+	<property name="version" value="1.3-beta" />
+	<property name="jar" value="zapcat-${version}.jar" />
+	<property name="war" value="zapcat-${version}.war" />
+	<property name="of" value="zapcat-openfire-${version}.jar" />
+
+	<target name="clean" description="clean build dir">
+		<delete failonerror="false" dir="build" />
+	</target>
+
+	<target name="distclean" description="clean build dir and generated libraries" depends="clean">
+		<delete failonerror="false" file="${jar}" />
+		<delete failonerror="false" file="${war}" />
+	</target>
+
+	<target name="jar" description="compile and jar the library" depends="clean">
+		<mkdir dir="build/jar" />
+		<javac destdir="build/jar" srcdir="src" debug="true">
+			<classpath>
+				<pathelement location="lib/log4j-1.2.15.jar" />
+				<pathelement location="lib/servlet-api.jar" />
+				<pathelement location="lib/ostermillerutils_1_07_00.jar" />
+				<pathelement location="lib/junit-4.4.jar" />
+			</classpath>
+		</javac>
+
+		<!-- We don't need the Openfire stubs. The only serve to make our code compile. -->
+		<jar destfile="${jar}" basedir="build/jar" excludes="org/jivesoftware/**" />
+	</target>
+
+	<target name="war" description="build the war file" depends="jar">
+		<copy todir="build">
+			<fileset dir="." includes="webapp/**" />
+		</copy>
+		<mkdir dir="build/webapp/WEB-INF/lib" />
+		<copy file="lib/log4j-1.2.15.jar" todir="build/webapp/WEB-INF/lib" />
+		<copy file="${jar}" todir="build/webapp/WEB-INF/lib" />
+
+		<jar destfile="${war}" basedir="build/webapp" />
+	</target>
+
+	<target name="of" description="build the Openfire plugin" depends="jar">
+		<copy todir="build">
+			<fileset dir="openfire" includes="zapcat/**" />
+		</copy>
+		<mkdir dir="build/zapcat/lib" />
+		<copy file="lib/log4j-1.2.15.jar" todir="build/zapcat/lib" />
+		<copy file="${jar}" todir="build/zapcat/lib" />
+
+		<jar destfile="${of}" basedir="build/zapcat" />
+	</target>
+
+	<target name="all" description="compile the lot" depends="jar,war,of" />
+	
+	<target name="deploy_war" depends="war" description="Deploys war to application server deploy directory">
+		<fail unless="deploy.dir">deploy.dir not set</fail>
+		<copy todir="${deploy.dir}">
+			<fileset dir=".">
+				<include name="${war}"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="agent" depends="jar" description="run the zapcat agent sample">
+		<mkdir dir="build/samples" />
+		<javac destdir="build/samples" srcdir="samples" classpath="${jar}" debug="true" />
+		<copy todir="build/samples" file="samples/log4j.xml" />
+		<java classname="SampleAgent" fork="true">
+			<jvmarg value="-Dcom.sun.management.jmxremote" />
+			<jvmarg value="-Dcom.sun.management.jmxremote.authenticate=false" />
+			<jvmarg value="-Dcom.sun.management.jmxremote.ssl=false" />
+			<classpath>
+				<pathelement path="build/samples" />
+				<pathelement location="${jar}" />
+				<pathelement location="lib/log4j-1.2.15.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="trapper" depends="jar" description="run the zapcat trapper sample">
+		<mkdir dir="build/samples" />
+		<javac destdir="build/samples" srcdir="samples" classpath="${jar}" debug="true" />
+		<copy todir="build/samples" file="samples/log4j.xml" />
+		<java classname="SampleTrapper" fork="true">
+			<jvmarg value="-Dcom.sun.management.jmxremote" />
+			<jvmarg value="-Dcom.sun.management.jmxremote.authenticate=false" />
+			<jvmarg value="-Dcom.sun.management.jmxremote.ssl=false" />
+			<classpath>
+				<pathelement path="build/samples" />
+				<pathelement location="${jar}" />
+				<pathelement location="lib/log4j-1.2.15.jar" />
+				<pathelement location="lib/ostermillerutils_1_07_00.jar" />
+			</classpath>
+		</java>
+	</target>
+</project>

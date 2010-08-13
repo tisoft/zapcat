@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/docs/api/org/apache/log4j/xml/log4j.dtd">
+
+<!--
+	This file is part of Zapcat.
+	
+	Zapcat is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option) any later
+	version.
+	
+	Zapcat is distributed in the hope that it will be useful, but WITHOUT ANY
+	WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+	details.
+	
+	You should have received a copy of the GNU General Public License along
+	with Zapcat. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="appender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyyMMdd HHmmss,SSS} %c %p - %m%n" />
+		</layout>
+	</appender>
+
+	<!--
+		<logger name="org.kjkoster.zapcat">
+		<level value="INFO" />
+		</logger>
+	-->
+
+	<root>
+		<priority value="ALL" />
+		<appender-ref ref="appender" />
+	</root>
+</log4j:configuration>

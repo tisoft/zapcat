@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+                         "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!--
+	This file is part of Zapcat.
+	
+	Zapcat is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option) any later
+	version.
+	
+	Zapcat is distributed in the hope that it will be useful, but WITHOUT ANY
+	WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+	details.
+	
+	You should have received a copy of the GNU General Public License along
+	with Zapcat. If not, see <http://www.gnu.org/licenses/>.
+-->
+<web-app>
+ <servlet>
+  <servlet-name>ZapcatServlet</servlet-name>
+  <servlet-class>org.kjkoster.zapcat.servlet.ZapcatServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
+ <servlet>
+  <servlet-name>ZabbixTemplateServlet</servlet-name>
+  <servlet-class>org.kjkoster.zapcat.servlet.ZabbixTemplateServlet</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>ZabbixTemplateServletTomcat</servlet-name>
+  <servlet-class>org.kjkoster.zapcat.servlet.ZabbixTemplateServletTomcat</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>ZabbixTemplateServletJBoss</servlet-name>
+  <servlet-class>org.kjkoster.zapcat.servlet.ZabbixTemplateServletJBoss</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>ZabbixTemplateServletTomcat</servlet-name>
+  <url-pattern>/zabbix-tomcat-definition.xml</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>ZabbixTemplateServletJBoss</servlet-name>
+  <url-pattern>/zabbix-jboss-definition.xml</url-pattern>
+ </servlet-mapping>
+ <login-config>
+  <auth-method>BASIC</auth-method>
+ </login-config>
+</web-app>

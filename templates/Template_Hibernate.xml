@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+
+<!--
+	This file is part of Zapcat.
+	
+	Zapcat is free software: you can redistribute it and/or modify it under the
+	terms of the GNU General Public License as published by the Free Software
+	Foundation, either version 3 of the License, or (at your option) any later
+	version.
+	
+	Zapcat is distributed in the hope that it will be useful, but WITHOUT ANY
+	WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+	details.
+	
+	You should have received a copy of the GNU General Public License along
+	with Zapcat. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<zabbix_export version="1.0" date="20.12.07" time="01.01">
+	<hosts>
+		<host name="Template_Hibernate">
+			<status>3</status>
+			<groups>
+				<group>Templates</group>
+			</groups>
+			<items>
+				<item type="0" key="jmx[org.hibernate:type=statistics][OptimisticFailureCount]" value_type="3">
+					<description>transactions failed per second</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<delta>1</delta>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][QueryExecutionMaxTimeQueryString]" value_type="1">
+					<description>peak execution sql</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][QueryExecutionMaxTime]" value_type="0">
+					<description>peak execution time</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<units>s</units>
+					<multiplier>1</multiplier>
+					<formula>0.001</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][SessionCloseCount]" value_type="3">
+					<description>session close count</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][SessionOpenCount]" value_type="3">
+					<description>session open count</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][SuccessfulTransactionCount]" value_type="3">
+					<description>transactions successful per second</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<delta>1</delta>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+				<item type="0" key="jmx[org.hibernate:type=statistics][TransactionCount]" value_type="3">
+					<description>transactions per second</description>
+					<delay>30</delay>
+					<history>90</history>
+					<trends>365</trends>
+					<delta>1</delta>
+					<formula>1</formula>
+					<snmp_community>public</snmp_community>
+					<snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+					<snmp_port>161</snmp_port>
+				</item>
+			</items>
+			<graphs>
+				<graph name="hibernate transactions per second" width="900" height="200">
+					<show_work_period>1</show_work_period>
+					<show_triggers>1</show_triggers>
+					<yaxismin>0.0000</yaxismin>
+					<yaxismax>100.0000</yaxismax>
+					<graph_elements>
+						<graph_element item="{HOSTNAME}:jmx[org.hibernate:type=statistics][OptimisticFailureCount]">
+							<color>990000</color>
+							<yaxisside>1</yaxisside>
+							<calc_fnc>2</calc_fnc>
+							<periods_cnt>5</periods_cnt>
+						</graph_element>
+						<graph_element item="{HOSTNAME}:jmx[org.hibernate:type=statistics][SuccessfulTransactionCount]">
+							<color>009900</color>
+							<yaxisside>1</yaxisside>
+							<calc_fnc>2</calc_fnc>
+							<periods_cnt>5</periods_cnt>
+						</graph_element>
+						<graph_element item="{HOSTNAME}:jmx[org.hibernate:type=statistics][TransactionCount]">
+							<color>000099</color>
+							<yaxisside>1</yaxisside>
+							<calc_fnc>2</calc_fnc>
+							<periods_cnt>5</periods_cnt>
+						</graph_element>
+					</graph_elements>
+				</graph>
+				<graph name="hibernate sessions" width="900" height="200">
+					<show_work_period>1</show_work_period>
+					<show_triggers>1</show_triggers>
+					<yaxismin>0.0000</yaxismin>
+					<yaxismax>100.0000</yaxismax>
+					<graph_elements>
+						<graph_element item="{HOSTNAME}:jmx[org.hibernate:type=statistics][SessionOpenCount]">
+							<color>009900</color>
+							<yaxisside>1</yaxisside>
+							<calc_fnc>2</calc_fnc>
+							<periods_cnt>5</periods_cnt>
+						</graph_element>
+						<graph_element item="{HOSTNAME}:jmx[org.hibernate:type=statistics][SessionCloseCount]">
+							<color>000099</color>
+							<yaxisside>1</yaxisside>
+							<calc_fnc>2</calc_fnc>
+							<periods_cnt>5</periods_cnt>
+						</graph_element>
+					</graph_elements>
+				</graph>
+			</graphs>
+		</host>
+	</hosts>
+</zabbix_export>

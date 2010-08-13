@@ -1,0 +1,78 @@
+INTRODUCTION
+
+	This is the zapcat distribution. For more information, tutorials and
+	documentation go to http://www.kjkoster.org/zapcat/.
+
+LICENSE
+
+	This file is part of Zapcat.
+
+    Zapcat is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Zapcat is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Zapcat.  If not, see <http://www.gnu.org/licenses/>.
+
+RELEASE NOTES
+
+	version 1.3-beta:
+		- Updates the base64 utilities and junit to their newest versions.
+		- Has better text on the web application's index page for the Oracle
+		  IAS/OC4J server and for Jetty.
+		- Fixes access permissions and JSP syntax for JBoss 4.0.2. (thanks to
+		  Pablo Barrionuevo)
+		- Now uses the internal JBoss MBean server if deployed a JBoss server.
+		  This means that you can see all MBeans that JBoss exposes, not just
+		  the platform MBeans.
+		- Adds a whilelist feature to regulate what hosts or IP addresses can
+		  and cannot connect to the Zapcat agent. (thanks to Tim McCune)
+
+	version 1.2:
+		- Introduces a trapper that can push data into the Zabbix server.
+		- Fixes an issue where system properties would be ignored by agents
+		  during startup. Hard-coded configuration was removed to simplify the
+		  agent's interface.
+		- Now works with older versions of Zabbix by introducing a switch that
+		  allows you to select the Zabbix 1.4 protocol, or the Zabbix 1.1
+		  protocol. (thanks to Valeri Felberg) Note that there are some issues
+		  with the trigger expression parser in Zabbix 1.1. I have not tested
+		  this very well, because I use Zabbix 1.4.
+		- Has some unit tests to avoid regression (never enough, though).
+		- Introduces a template for Java applications, making it even easier to
+		  quickly set up a monitor.
+		- Introduces a template for Hibernate, allowing you to track down SQL
+		  query storms and database connection leakage.
+		- Introduced a template for Tomcat, plus a host definition generator to
+		  automatically generate a host definition tailored to your Tomcat
+		  configuration.
+		- Makes the agent reply with ZBX_NOTSUPPORTED for unsupported mbeans or
+		  attributes. This makes the logging a lot less verbose and makes it
+		  easier to see what the Zapcat agent supports and what not. This is
+		  largely thanks to Gerco Dries, who documented the agent protocol on
+		  the Zabbix wiki.
+		- Introduces agent.version and agent.ping.
+		- Makes the agent more robust against query formatting errors.
+
+	version 1.1:
+		- Introduces an Openfire XMPP server plugin for Zapcat. (thanks to Guus
+		  der Kinderen)
+		- Fixes a problem where the agent closed the connection before the
+		  Zabbix server had time to send the query.
+		- Updates to a newer version of Log4J. (thanks to Guus der Kinderen)
+		- Changes the query parser so that square brackets in object names are
+		  no longer a problem.
+		- Updates the server socket to use NIO. (thanks to Guus der Kinderen)
+		- Introduces a servlet for easy integration in servlet containers, such
+		  as Tomcat.
+		- Introduces a system property to configure the bind address. (thanks
+		  to Guus der Kinderen)
+
+    version 1.0:
+		- First version. Supports Zabbix agents and composite data.
