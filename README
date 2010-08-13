@@ -22,6 +22,12 @@ LICENSE
 
 RELEASE NOTES
 
+	version trunk-113-standalone:
+		- can run as a standalone process without a JEE server 
+			(act as a proxy-gateway from zabbix agent protocol to JMX)
+		- can connect to any JMX server 
+		- use standard Java Logger instead of log4j
+
 	version 1.3-beta:
 		- Updates the base64 utilities and junit to their newest versions.
 		- Has better text on the web application's index page for the Oracle
