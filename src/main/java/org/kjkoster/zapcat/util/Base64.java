@@ -92,12 +92,16 @@ public class Base64 {
     }
     
     public static String splitLines(String string) {
-        String lines = "";
-        for (int i = 0; i < string.length(); i += splitLinesAt) {
-            lines += string.substring(i, Math.min(string.length(), i + splitLinesAt));
-            lines += "\r\n";
-        }
+		if(string.length()<splitLinesAt)
+			return string;
+		else{
+			String lines = "";
+			for (int i = 0; i < string.length(); i += splitLinesAt) {
+				lines += string.substring(i, Math.min(string.length(), i + splitLinesAt));
+				lines += "\r\n";
+			}
         return lines;
+		}
     }
  
 }
