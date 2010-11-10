@@ -20,13 +20,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import javax.management.InstanceNotFoundException;
+import javax.management.ObjectName;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
-
-import javax.management.InstanceNotFoundException;
-import javax.management.ObjectName;
 
 import org.junit.After;
 import org.junit.Before;
@@ -149,7 +148,7 @@ public class ZabbixAgentConfigurationTest {
 
     private void assertAgentUp(final int port) throws Exception {
         // give the agent some time to open the port
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         assertEquals("" + port, JMXHelper.query(new ObjectName(
                 "org.kjkoster.zapcat:type=Agent,port=" + port), "Port"));

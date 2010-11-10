@@ -16,6 +16,7 @@ package org.kjkoster.zapcat.zabbix;
  * Zapcat. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import javax.management.ObjectName;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,9 +35,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.kjkoster.zapcat.Agent;
 
@@ -199,9 +199,9 @@ public final class ZabbixAgent implements Agent, Runnable {
     public void run() {
         final ExecutorService handlers = new ThreadPoolExecutor(1, 5, 60L,
                 TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-        /*final ObjectName mbeanName = JMXHelper.register(new Agent(),
+        final ObjectName mbeanName = JMXHelper.register(new Agent(),
                 "org.kjkoster.zapcat:type=Agent,port=" + port);
-*/
+
         try {
             // 0 means 'use default backlog'
             serverSocket = new ServerSocket(port, 0, address);
@@ -240,7 +240,7 @@ public final class ZabbixAgent implements Agent, Runnable {
                 // ignore, we're going down anyway...
             }
 
-//            JMXHelper.unregister(mbeanName);
+            JMXHelper.unregister(mbeanName);
         }
     }
 
